@@ -1,15 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Curso de Diseño Web - Inscripción</title>
+    <link rel="stylesheet" href="./css/styles.css">
+
+    <script src="https://kit.fontawesome.com/55ed1da071.js" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>Header</header>
-    <br>
-    <section>Content</section>
-    <br>
-    <footer>Footer</footer>
+    <header><h1>Cursos online</h1></header>
+    <!-- Contenedor principal -->
+    <div class="container">
+        <div class="curso-info">
+            <!-- Descipción del curso -->
+            <h1>Curso de Diseño Web Profesional</h1>
+            <p class="descripcion">
+                Aprende a crear sitios web modernos y responsivos desde cero. Este curso te enseñará 
+                las mejores prácticas de diseño, HTML5, CSS3, y principios de UX/UI para crear 
+                experiencias digitales impactantes.
+            </p>
+
+            <!-- Modulos del curso -->
+            <div class="modulos">
+                <h2>Temario del Curso</h2>
+                <div class="modulo-item">
+                    <strong>Módulo 1:</strong> Fundamentos del Diseño Web y HTML5
+                </div>
+                <div class="modulo-item">
+                    <strong>Módulo 2:</strong> CSS3 Avanzado y Layouts Modernos
+                </div>
+                <div class="modulo-item">
+                    <strong>Módulo 3:</strong> Diseño Responsivo y Mobile First
+                </div>
+                <div class="modulo-item">
+                    <strong>Módulo 4:</strong> Principios de UX/UI y Accesibilidad
+                </div>
+                <div class="modulo-item">
+                    <strong>Módulo 5:</strong> Proyecto Final y Portfolio
+                </div>
+            </div>
+
+            <!-- Sección acerca del instructor -->
+            <div class="docente">
+                <h2>Tu Instructor</h2>
+                <div class="docente-info">
+                    <div><i id="userIcon" class="fa-solid fa-user-tie"></i></div>
+                    <div>
+                        <strong style="font-size: 1.2em;">Carlos Mendoza</strong><br>
+                        <p>
+                            Diseñador Web con 10+ años de experiencia. Especialista en desarrollo 
+                            frontend y diseño de interfaces. Ha trabajado con empresas como Google y Microsoft.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de inscripción-->
+        <div class="formulario-container">
+            <h2>Inscríbete Ahora</h2>
+            <form id="registroForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" required placeholder="Juan Pérez">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Correo electrónico:</label>
+                    <input type="email" id="email" name="email" required placeholder="tu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required placeholder="+57 300 123 4567">
+                </div>
+
+                <div class="form-group">
+                    <label for="motivacion">¿Por qué quieres tomar este curso?</label>
+                    <textarea id="motivacion" name="motivacion" rows="4" placeholder="Cuéntanos sobre tus objetivos..."></textarea>
+                </div>
+
+                <button type="submit" class="btn-submit">Confirmar Inscripción</button> 
+            </form>
+        </div>
+    </div>
 </body>
 </html>
