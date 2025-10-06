@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía Flexbox y Grid</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: black;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            border: 2px solid turquoise;
+        }
+
+        h1, h2 {
+            color: black;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .example {
+            margin-bottom: 40px;
+        }
+
+        .code-comment {
+            background: #fffbcc;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #f39c12;
+            font-style: italic;
+        }
+
+        /* ========================================
+           EJEMPLOS DE FLEXBOX
+        ======================================== */
+
+        /* EJEMPLO 1: Barra de Navegación con Flexbox */
+        .navbar-flex {
+            display: flex; /* Activa flexbox en el contenedor */
+            justify-content: space-between; /* Distribuye espacio entre elementos */
+            align-items: center; /* Centra verticalmente los items */
+            background: #2c3e50;
+            padding: 15px 30px;
+            border-radius: 5px;
+        }
+
+        .navbar-flex .logo {
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .navbar-flex ul {
+            display: flex; /* Los items del menú en fila */
+            gap: 25px; /* Espacio entre items del menú */
+            list-style: none;
+        }
+
+        .navbar-flex ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar-flex ul li a:hover {
+            color: #3498db;
+        }
+
+        /* EJEMPLO 2: Tarjetas con Flexbox (Wrap) */
+        .cards-flex {
+            display: flex; /* Contenedor flex */
+            flex-wrap: wrap; /* Permite que las tarjetas bajen a nueva línea */
+            gap: 20px; /* Espacio entre tarjetas */
+            justify-content: center; /* Centra las tarjetas */
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            flex: 0 1 300px; /* No crecer, sí reducir, base 300px */
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        /* EJEMPLO 3: Formulario con Flexbox */
+        .form-flex {
+            display: flex;
+            flex-direction: column; /* Dirección vertical */
+            gap: 15px; /* Espacio entre campos */
+            max-width: 500px;
+        }
+
+        .form-row {
+            display: flex; /* Cada fila es flex */
+            gap: 15px; /* Espacio entre campos en la misma fila */
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column; /* Label arriba, input abajo */
+            flex: 1; /* Ocupa espacio disponible */
+        }
+
+        .form-group label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px; /* Espacio entre botones */
+            justify-content: flex-end; /* Botones a la derecha */
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #3498db;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #95a5a6;
+            color: white;
+        }
+
+        /* EJEMPLO 4: Layout Principal con Flexbox */
+        .layout-flex {
+            display: flex; /* Contenedor principal flex */
+            gap: 20px;
+            min-height: 400px;
+        }
+
+        .sidebar-flex {
+            flex: 0 0 250px; /* No crecer, no reducir, ancho fijo 250px */
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .main-content-flex {
+            flex: 1; /* Ocupa todo el espacio restante */
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        /* ========================================
+           EJEMPLOS DE GRID
+        ======================================== */
+
+        /* EJEMPLO 5: Grid Básico - Galería de Imágenes */
+        .gallery-grid {
+            display: grid; /* Activa CSS Grid */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
+            /* Columnas automáticas que se adaptan, mínimo 200px */
+            gap: 15px; /* Espacio entre items */
+        }
+
+        .gallery-item {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 200px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* EJEMPLO 6: Grid Layout Complejo - Dashboard */
+        .dashboard-grid {
+            display: grid;
+            /* Definir columnas: 3 columnas de tamaño flexible */
+            grid-template-columns: 1fr 1fr 1fr;
+            /* Definir filas: auto se ajusta al contenido */
+            grid-template-rows: auto auto auto;
+            gap: 20px; /* Espacio entre celdas */
+            /* Definir áreas del grid con nombres */
+            grid-template-areas:
+                "header header header"
+                "sidebar main main"
+                "sidebar footer footer";
+        }
+
+        .dashboard-header {
+            grid-area: header; /* Asignar a área 'header' */
+            background: #3498db;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .dashboard-sidebar {
+            grid-area: sidebar; /* Asignar a área 'sidebar' */
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .dashboard-main {
+            grid-area: main; /* Asignar a área 'main' */
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .dashboard-footer {
+            grid-area: footer; /* Asignar a área 'footer' */
+            background: #95a5a6;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* EJEMPLO 7: Formulario con Grid */
+        .form-grid {
+            display: grid;
+            /* 2 columnas iguales */
+            grid-template-columns: 1fr 1fr;
+            gap: 15px 20px; /* gap vertical y horizontal */
+            max-width: 600px;
+        }
+
+        .form-grid .full-width {
+            grid-column: 1 / -1; /* Ocupa desde columna 1 hasta la última */
+        }
+
+        /* EJEMPLO 8: Grid con Áreas Específicas - Blog Layout */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr; /* Contenido principal más ancho */
+            grid-template-rows: auto 1fr auto;
+            gap: 20px;
+            min-height: 500px;
+        }
+
+        .blog-header {
+            grid-column: 1 / -1; /* Ocupa todas las columnas */
+            background: #2c3e50;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .blog-content {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .blog-sidebar {
+            background: #ecf0f1;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .blog-footer {
+            grid-column: 1 / -1; /* Ocupa todas las columnas */
+            background: #34495e;
+            color: white;
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* EJEMPLO 9: Grid Nested (Grid dentro de Grid) */
+        .nested-grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .nested-grid-item {
+            background: #3498db;
+            padding: 20px;
+            border-radius: 5px;
+            color: white;
+            /* Grid interno */
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .nested-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        /* EJEMPLO 10: Combinación Flex + Grid */
+        .hybrid-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .hybrid-header {
+            /* Flex para la navegación */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2c3e50;
+            padding: 20px;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .hybrid-content {
+            /* Grid para el contenido */
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .hybrid-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .hybrid-card-header {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+        }
+
+        .hybrid-card-body {
+            padding: 15px;
+            /* Flex para organizar contenido interno */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .layout-flex {
+                flex-direction: column; /* Cambiar a columna en móvil */
+            }
+            
+            .dashboard-grid {
+                grid-template-columns: 1fr; /* Una columna en móvil */
+                grid-template-areas:
+                    "header"
+                    "sidebar"
+                    "main"
+                    "footer";
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr; /* Una columna en móvil */
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; color:white; margin-bottom: 30px;">
+        📚 Guía Completa: Display Flex y Grid
+    </h1>
+
+    <!-- ========================================
+         SECCIÓN FLEXBOX
+    ======================================== -->
+    
+    <div class="container">
+        <h2>🔷 FLEXBOX - Ejemplos Prácticos</h2>
+
+        <!-- EJEMPLO 1: Navbar -->
+        <div class="example">
+            <h3>1. Barra de Navegación (Flexbox)</h3>
+            <div class="code-comment">
+                💡 justify-content: space-between → Separa logo y menú en extremos<br>
+                💡 align-items: center → Centra verticalmente los elementos
+            </div>
+            <nav class="navbar-flex">
+                <div class="logo">MiLogo</div>
+                <ul>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#">Servicios</a></li>
+                    <li><a href="#">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+
+        <!-- EJEMPLO 2: Tarjetas -->
+        <div class="example">
+            <h3>2. Tarjetas Responsivas (Flexbox con Wrap)</h3>
+            <div class="code-comment">
+                💡 flex-wrap: wrap → Las tarjetas bajan a nueva línea si no caben<br>
+                💡 flex: 0 1 300px → Base 300px, puede reducirse pero no crecer
+            </div>
+            <div class="cards-flex">
+                <div class="card">
+                    <h3>Tarjeta 1</h3>
+                    <p>Contenido de ejemplo para la primera tarjeta.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 2</h3>
+                    <p>Contenido de ejemplo para la segunda tarjeta.</p>
+                </div>
+                <div class="card">
+                    <h3>Tarjeta 3</h3>
+                    <p>Contenido de ejemplo para la tercera tarjeta.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJEMPLO 3: Formulario -->
+        <div class="example">
+            <h3>3. Formulario (Flexbox)</h3>
+            <div class="code-comment">
+                💡 flex-direction: column → Organiza campos verticalmente<br>
+                💡 flex: 1 → Los campos ocupan el mismo espacio en la fila
+            </div>
+            <form class="form-flex">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" placeholder="Tu nombre">
+                    </div>
+                    <div class="form-group">
+                        <label>Apellido:</label>
+                        <input type="text" placeholder="Tu apellido">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" placeholder="correo@ejemplo.com">
+                </div>
+                <div class="form-group">
+                    <label>Mensaje:</label>
+                    <textarea rows="4" placeholder="Tu mensaje..."></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- EJEMPLO 4: Layout -->
+        <div class="example">
+            <h3>4. Layout Sidebar + Contenido (Flexbox)</h3>
+            <div class="code-comment">
+                💡 flex: 0 0 250px → Sidebar de ancho fijo (250px)<br>
+                💡 flex: 1 → Contenido ocupa todo el espacio restante
+            </div>
+            <div class="layout-flex">
+                <aside class="sidebar-flex">
+                    <h4>Sidebar</h4>
+                    <ul style="list-style: none; margin-top: 15px;">
+                        <li style="margin-bottom: 10px;">📊 Dashboard</li>
+                        <li style="margin-bottom: 10px;">👥 Usuarios</li>
+                        <li style="margin-bottom: 10px;">⚙️ Configuración</li>
+                    </ul>
+                </aside>
+                <main class="main-content-flex">
+                    <h4>Contenido Principal</h4>
+                    <p>Este es el área principal del contenido. El sidebar tiene un ancho fijo de 250px y este contenido ocupa todo el espacio restante gracias a flex: 1.</p>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========================================
+         SECCIÓN GRID
+    ======================================== -->
+
+    <div class="container">
+        <h2>🔶 CSS GRID - Ejemplos Prácticos</h2>
+
+        <!-- EJEMPLO 5: Galería -->
+        <div class="example">
+            <h3>5. Galería de Imágenes (Grid Auto)</h3>
+            <div class="code-comment">
+                💡 repeat(auto-fit, minmax(200px, 1fr)) → Columnas automáticas que se adaptan<br>
+                💡 Mínimo 200px por columna, máximo espacio disponible (1fr)
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">Imagen 1</div>
+                <div class="gallery-item">Imagen 2</div>
+                <div class="gallery-item">Imagen 3</div>
+                <div class="gallery-item">Imagen 4</div>
+                <div class="gallery-item">Imagen 5</div>
+                <div class="gallery-item">Imagen 6</div>
+            </div>
+        </div>
+
+        <!-- EJEMPLO 6: Dashboard -->
+        <div class="example">
+            <h3>6. Dashboard con Grid Areas</h3>
+            <div class="code-comment">
+                💡 grid-template-areas → Define áreas con nombres para cada sección<br>
+                💡 grid-area → Asigna cada elemento a su área correspondiente
+            </div>
+            <div class="dashboard-grid">
+                <header class="dashboard-header">
+                    <h3>Dashboard Header</h3>
+                </header>
+                <aside class="dashboard-sidebar">
+                    <h4>Menú Lateral</h4>
+                    <ul style="list-style: none; margin-top: 10px;">
+                        <li>• Opción 1</li>
+                        <li>• Opción 2</li>
+                        <li>• Opción 3</li>
+                    </ul>
+                </aside>
+                <main class="dashboard-main">
+                    <h4>Contenido Principal</h4>
+                    <p>Este layout usa grid-template-areas para definir la estructura. Es muy útil para layouts complejos.</p>
+                </main>
+                <footer class="dashboard-footer">
+                    Dashboard Footer
+                </footer>
+            </div>
+        </div>
+
+        <!-- EJEMPLO 7: Formulario Grid -->
+        <div class="example">
+            <h3>7. Formulario con Grid (2 Columnas)</h3>
+            <div class="code-comment">
+                💡 grid-template-columns: 1fr 1fr → Dos columnas iguales<br>
+                💡 grid-column: 1 / -1 → Elemento ocupa todas las columnas
+            </div>
+            <form class="form-grid">
+                <div class="form-group">
+                    <label>Nombre:</label>
+                    <input type="text" placeholder="Nombre">
+                </div>
+                <div class="form-group">
+                    <label>Apellido:</label>
+                    <input type="text" placeholder="Apellido">
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label>Teléfono:</label>
+                    <input type="tel" placeholder="Teléfono">
+                </div>
+                <div class="form-group full-width">
+                    <label>Dirección:</label>
+                    <input type="text" placeholder="Dirección completa">
+                </div>
+                <div class="form-group full-width">
+                    <label>Comentarios:</label>
+                    <textarea rows="3" placeholder="Comentarios adicionales..."></textarea>
+                </div>
+                <div class="form-actions full-width">
+                    <button type="submit" class="btn btn-primary">Enviar Formulario</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- EJEMPLO 8: Blog Layout -->
+        <div class="example">
+            <h3>8. Layout de Blog (Grid)</h3>
+            <div class="code-comment">
+                💡 grid-template-columns: 2fr 1fr → Contenido principal el doble de ancho que sidebar<br>
+                💡 grid-column: 1 / -1 → Header y footer ocupan todo el ancho
+            </div>
+            <div class="blog-grid">
+                <header class="blog-header">
+                    <h3>Mi Blog Personal</h3>
+                </header>
+                <article class="blog-content">
+                    <h4>Artículo Principal</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Este es el contenido principal del blog que ocupa 2/3 del ancho.</p>
+                </article>
+                <aside class="blog-sidebar">
+                    <h4>Sidebar</h4>
+                    <p>Artículos recientes y categorías.</p>
+                </aside>
+                <footer class="blog-footer">
+                    © 2025 Mi Blog - Todos los derechos reservados
+                </footer>
+            </div>
+        </div>
+
+        <!-- EJEMPLO 9: Grid Anidado -->
+        <div class="example">
+            <h3>9. Grid Anidado (Grid dentro de Grid)</h3>
+            <div class="code-comment">
+                💡 Un elemento de grid puede ser a su vez un contenedor grid<br>
+                💡 Útil para layouts complejos con múltiples niveles
+            </div>
+            <div class="nested-grid-container">
+                <div class="nested-grid-item">
+                    <div class="nested-item">A1</div>
+                    <div class="nested-item">A2</div>
+                    <div class="nested-item">A3</div>
+                    <div class="nested-item">A4</div>
+                </div>
+                <div class="nested-grid-item">
+                    <div class="nested-item">B1</div>
+                    <div class="nested-item">B2</div>
+                    <div class="nested-item">B3</div>
+                    <div class="nested-item">B4</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- EJEMPLO 10: Híbrido -->
+        <div class="example">
+            <h3>10. Layout Híbrido (Flex + Grid)</h3>
+            <div class="code-comment">
+                💡 Combina Flex para navegación y Grid para contenido<br>
+                💡 Usa las fortalezas de cada sistema de layout
+            </div>
+            <div class="hybrid-layout">
+                <header class="hybrid-header">
+                    <h3>Sitio Web</h3>
+                    <nav>
+                        <span style="margin: 0 10px;">Inicio</span>
+                        <span style="margin: 0 10px;">Acerca</span>
+                        <span style="margin: 0 10px;">Contacto</span>
+                    </nav>
+                </header>
+                <div class="hybrid-content">
+                    <div class="hybrid-card">
+                        <div class="hybrid-card-header">
+                            <h4>Servicio 1</h4>
+                        </div>
+                        <div class="hybrid-card-body">
+                            <p>Descripción del servicio</p>
+                            <button class="btn btn-primary">Ver más</button>
+                        </div>
+                    </div>
+                    <div class="hybrid-card">
+                        <div class="hybrid-card-header">
+                            <h4>Servicio 2</h4>
+                        </div>
+                        <div class="hybrid-card-body">
+                            <p>Descripción del servicio</p>
+                            <button class="btn btn-primary">Ver más</button>
+                        </div>
+                    </div>
+                    <div class="hybrid-card">
+                        <div class="hybrid-card-header">
+                            <h4>Servicio 3</h4>
+                        </div>
+                        <div class="hybrid-card-body">
+                            <p>Descripción del servicio</p>
+                            <button class="btn btn-primary">Ver más</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- RESUMEN -->
+    <div class="container">
+        <h2>📝 Resumen de Conceptos Clave</h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
+            <div style="background: #e8f5e9; padding: 20px; border-radius: 5px;">
+                <h3 style="color: #2e7d32;">Flexbox - Usa cuando:</h3>
+                <ul>
+                    <li>Necesitas alinear elementos en UNA dirección (fila o columna)</li>
+                    <li>Quieres distribuir espacio entre elementos</li>
+                    <li>Trabajas con componentes pequeños (navbar, botones, formularios)</li>
+                    <li>Necesitas orden flexible de elementos</li>
+                </ul>
+            </div>
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 5px;">
+                <h3 style="color: #1565c0;">Grid - Usa cuando:</h3>
+                <ul>
+                    <li>Necesitas layout en DOS dimensiones (filas Y columnas)</li>
+                    <li>Trabajas con layouts complejos de página completa</li>
+                    <li>Quieres controlar posicionamiento preciso</li>
+                    <li>Necesitas galerías o dashboards</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
